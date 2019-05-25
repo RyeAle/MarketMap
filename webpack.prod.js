@@ -6,6 +6,6 @@ module.exports = merge(common, {
   mode: 'production',
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, 'src', 'main', 'resources', 'static', 'js')
+    path: path.resolve(__dirname, 'public', 'js')
   }
 });
