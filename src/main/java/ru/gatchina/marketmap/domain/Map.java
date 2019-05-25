@@ -3,6 +3,7 @@ package ru.gatchina.marketmap.domain;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -19,4 +20,7 @@ public class Map {
 
     @ManyToOne
     private Shop shop;
+
+    @OneToMany(mappedBy = "block")
+    private Set<Block> blocks;
 }

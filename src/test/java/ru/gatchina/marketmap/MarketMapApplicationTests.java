@@ -88,8 +88,4 @@ public class MarketMapApplicationTests {
         Assert.assertNotNull(shop.getProducts());
         System.out.println(shop.getProducts());
     }
-
-
-
-
 }

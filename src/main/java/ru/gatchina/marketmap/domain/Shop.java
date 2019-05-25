@@ -21,14 +21,14 @@ public class Shop {
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "shop")
     private Set<Map> maps;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(
             name = "shop_product",
-            joinColumns = @JoinColumn(name = "shops"),
-            inverseJoinColumns = @JoinColumn(name = "products")
+            joinColumns = @JoinColumn(name = "shop_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
     )
     private Set<Product> products;
 

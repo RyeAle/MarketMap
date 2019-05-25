@@ -2,10 +2,7 @@ package ru.gatchina.marketmap.domain;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -21,4 +18,7 @@ public class Block {
 
     @ManyToOne
     private Category category;
+
+    @ManyToOne
+    private Block block;
 }
