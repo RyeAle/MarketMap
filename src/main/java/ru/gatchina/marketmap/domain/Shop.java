@@ -1,7 +1,7 @@
 package ru.gatchina.marketmap.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Set;
 
 @Data
@@ -32,6 +33,12 @@ public class Shop {
     private Double longitude;
 
     private Double latitude;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH.mm")
+    private Date openTime;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH.mm")
+    private Date closeTime;
 
     @ToString.Exclude
     @JsonManagedReference
