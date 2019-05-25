@@ -11,3 +11,8 @@
     left: 50%;
     transform: translate(-50%) !important;
 }
+
+
+.container {
+    padding: 0 !important;
+}
