@@ -1,0 +1,13 @@
+.v-toolbar__content {
+    padding: 0 !important;
+    height: auto !important;
+}
+
+.v-input__slot {
+    margin-bottom: 0 !important;
+}
+
+.v-toolbar[data-booted=true] {
+    left: 50%;
+    transform: translate(-50%) !important;
+}

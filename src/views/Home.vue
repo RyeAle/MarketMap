@@ -1,18 +1,24 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <v-container fill-height fluid>
+    <yandex-map
+      id = "map"
+      style="width: 100%; height: 100%"
+      :coords="[54.62896654088406, 39.731893822753904]"
+      zoom="10"
+      :behaviors="['drag']"
+    >
+
+    </yandex-map>
+  </v-container>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+
+  import { yandexMap, ymapMarker } from 'vue-yandex-maps'
 
 export default {
   name: 'home',
-  components: {
-    HelloWorld
-  }
+  components: { yandexMap, ymapMarker }
 }
 </script>
+
