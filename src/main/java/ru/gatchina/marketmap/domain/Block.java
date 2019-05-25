@@ -1,11 +1,16 @@
 package ru.gatchina.marketmap.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Block {
 
     @Id
@@ -16,9 +21,21 @@ public class Block {
 
     private Integer y;
 
+    private BlockType blockType;
+
     @ManyToOne
     private Category category;
 
     @ManyToOne
-    private Block block;
+    @JsonBackReference
+    private Map map;
+
+    @JsonManagedReference
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinTable(
+            name = "block_product",
+            joinColumns = @JoinColumn(name = "block_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id")
+    )
+    private Set<Product> products;
 }

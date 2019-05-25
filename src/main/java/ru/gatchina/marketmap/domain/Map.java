@@ -1,6 +1,10 @@
 package ru.gatchina.marketmap.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -19,8 +23,14 @@ public class Map {
     private Integer floor;
 
     @ManyToOne
+    @JsonBackReference
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private Shop shop;
 
-    @OneToMany(mappedBy = "block")
+    @ToString.Exclude
+    @JsonManagedReference
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "map", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private Set<Block> blocks;
 }

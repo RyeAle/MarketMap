@@ -4,14 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ru.gatchina.marketmap.domain.Category;
-import ru.gatchina.marketmap.domain.Network;
-import ru.gatchina.marketmap.domain.Product;
-import ru.gatchina.marketmap.domain.Shop;
-import ru.gatchina.marketmap.repository.CategoryRepository;
-import ru.gatchina.marketmap.repository.NetworkRepository;
-import ru.gatchina.marketmap.repository.ProductRepository;
-import ru.gatchina.marketmap.repository.ShopRepository;
+import ru.gatchina.marketmap.domain.*;
+import ru.gatchina.marketmap.repository.*;
 
 import java.util.HashSet;
 import java.util.List;
@@ -31,16 +25,24 @@ public class MarketMapApplication implements CommandLineRunner {
     @Autowired
     private NetworkRepository networkRepository;
 
+    @Autowired
+    private BlockRepository blockRepository;
+
+    @Autowired
+    private MapRepository mapRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(MarketMapApplication.class, args);
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         creatingCategory();
         creatingProducts();
         createNetwork();
         createShop();
+        createMap();
+        createBlocks();
     }
 
     private void creatingCategory() {
@@ -82,6 +84,44 @@ public class MarketMapApplication implements CommandLineRunner {
 
         List<Product> products = productRepository.findAll();
         shop.setProducts(new HashSet<>(products));
+        shopRepository.save(shop);
+    }
+
+    private void createBlocks() {
+        Map map = mapRepository.findAll().iterator().next();
+        List<Category> categories = categoryRepository.findAll();
+        List<Product> products = productRepository.findAll();
+
+        Block block1 = new Block();
+        block1.setX(1);
+        block1.setY(2);
+        block1.setMap(map);
+        block1.setCategory(categories.get(0));
+        block1.setProducts(new HashSet<>(products));
+        block1.setBlockType(BlockType.PASS);
+
+        Block block2 = new Block();
+        block2.setX(2);
+        block2.setY(3);
+        block2.setMap(map);
+        block2.setProducts(new HashSet<>(products));
+        block2.setCategory(categories.get(1));
+        block2.setBlockType(BlockType.SHELF);
+
+       blockRepository.save(block1);
+       blockRepository.save(block2);
+    }
+
+    private void createMap() {
+        Shop shop = shopRepository.findAll().get(0);
+        Map map = new Map();
+        map.setWidth(100);
+        map.setHeight(200);
+        map.setFloor(1);
+
+        map.setShop(shop);
+        shop.getMaps().add(map);
+
         shopRepository.save(shop);
     }
 }
