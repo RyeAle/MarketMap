@@ -14,7 +14,5 @@
 </script>
 
 <style scoped>
-  .v-toolbar__content {
-    padding: 0;
-  }
+
 </style>
