@@ -4,6 +4,8 @@
     <v-content fill class="pt-0">
         <router-view/>
     </v-content>
+        <toolbar style="z-index: 100; position: absolute; width: 90%;"/>
+
     </v-app>
   </div>
 </template>
@@ -21,6 +23,5 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
