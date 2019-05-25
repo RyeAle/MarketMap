@@ -7,8 +7,9 @@
 </head>
 <body>
 <script>
-    console.log(JSON.parse("{\"id\":6,\"longitude\":1.23,\"latitude\":1.23,\"maps\":[{\"id\":7,\"width\":100,\"height\":200,\"floor\":1,\"blocks\":[{\"id\":9,\"x\":2,\"y\":3,\"blockType\":\"SHELF\",\"category\":null},{\"id\":8,\"x\":1,\"y\":2,\"blockType\":\"PASS\",\"category\":null}]}],\"products\":[{\"id\":4,\"name\":\"Хлеб\",\"category\":{\"id\":2,\"name\":\"Хлебобулочные изделия\"}},{\"id\":3,\"name\":\"Молоко\",\"category\":{\"id\":1,\"name\":\"Молочные продукты\"}}]}"));
-    document.body.append(objectToSvg(JSON.parse("{\"id\":6,\"longitude\":1.23,\"latitude\":1.23,\"maps\":[{\"id\":7,\"width\":100,\"height\":200,\"floor\":1,\"blocks\":[{\"id\":9,\"x\":2,\"y\":3,\"blockType\":\"SHELF\",\"category\":null},{\"id\":8,\"x\":1,\"y\":2,\"blockType\":\"PASS\",\"category\":null}]}],\"products\":[{\"id\":4,\"name\":\"Хлеб\",\"category\":{\"id\":2,\"name\":\"Хлебобулочные изделия\"}},{\"id\":3,\"name\":\"Молоко\",\"category\":{\"id\":1,\"name\":\"Молочные продукты\"}}]}").maps[0]));
+    // console.log(JSON.parse("{\"id\":6,\"longitude\":1.23,\"latitude\":1.23,\"maps\":[{\"id\":7,\"width\":100,\"height\":200,\"floor\":1,\"blocks\":[{\"id\":9,\"x\":2,\"y\":3,\"blockType\":\"SHELF\",\"category\":null},{\"id\":8,\"x\":1,\"y\":2,\"blockType\":\"PASS\",\"category\":null}]}],\"products\":[{\"id\":4,\"name\":\"Хлеб\",\"category\":{\"id\":2,\"name\":\"Хлебобулочные изделия\"}},{\"id\":3,\"name\":\"Молоко\",\"category\":{\"id\":1,\"name\":\"Молочные продукты\"}}]}"));
+    // document.body.append(objectToSvg(JSON.parse("{\"id\":6,\"longitude\":1.23,\"latitude\":1.23,\"maps\":[{\"id\":7,\"width\":100,\"height\":200,\"floor\":1,\"blocks\":[{\"id\":9,\"x\":2,\"y\":3,\"blockType\":\"SHELF\",\"category\":null},{\"id\":8,\"x\":1,\"y\":2,\"blockType\":\"PASS\",\"category\":null}]}],\"products\":[{\"id\":4,\"name\":\"Хлеб\",\"category\":{\"id\":2,\"name\":\"Хлебобулочные изделия\"}},{\"id\":3,\"name\":\"Молоко\",\"category\":{\"id\":1,\"name\":\"Молочные продукты\"}}]}").maps[0]));
+    document.body.append(createGrid(15, 20))
 </script>
 </body>
 </html>
