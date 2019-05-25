@@ -16,7 +16,12 @@ var jsonProp = [
           x: '2',
           y: '3',
           id: 1,
-          blockType: 'entry'
+          blockType: 'entry',
+          category: {
+            id: 228,
+            name: "kek",
+            logoUrl: "/img/kek/lol"
+          }
         }
       ]
   }
