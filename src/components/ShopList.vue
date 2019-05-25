@@ -13,14 +13,33 @@
 
     <v-bottom-nav
       app
+      height="500px"
       :active.sync="activeBtn"
       :value="showNav"
       absolute
     >
-      <v-btn flat color="teal">
-        <span>Recents</span>
-        <v-icon>history</v-icon>
-      </v-btn>
+      <v-container grid-list-xl fluid>
+        <v-layout column align-space-around justify-start fill-height wrap>
+          <v-flex>fefef
+            <v-btn flat color="teal">
+              <span>Recents</span>
+              <v-icon>history</v-icon>
+            </v-btn>
+          </v-flex>
+          <v-flex>fefe
+            <v-btn flat color="teal">
+              <span>Recents</span>
+              <v-icon>history</v-icon>
+            </v-btn>
+          </v-flex>
+          <v-flex>fefe
+            <v-btn flat color="teal">
+              <span>Recents</span>
+              <v-icon>history</v-icon>
+            </v-btn>
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-bottom-nav>
   </v-layout>
 </template>
