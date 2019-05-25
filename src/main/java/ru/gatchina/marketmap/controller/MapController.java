@@ -11,6 +11,7 @@ import ru.gatchina.marketmap.domain.Shop;
 import ru.gatchina.marketmap.repository.BlockRepository;
 import ru.gatchina.marketmap.repository.ShopRepository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -31,7 +32,7 @@ public class MapController {
 
     @GetMapping("/shop/{id}")
     public Shop getShopInfo(@PathVariable int id, @RequestParam(name = "floor", defaultValue = "1") Integer f) {
-        Optional<Shop> shop = shopRepository.findById(id);
+        Optional<Shop> shop = shopRepository.findWithBlocksById(id);
         if (shop.isPresent() && f > 0) {
             Shop sh = shop.get();
             sh.getMaps().removeIf(s -> !s.getFloor().equals(f));
@@ -39,5 +40,12 @@ public class MapController {
             return sh;
         }
         return null;
+    }
+
+    @GetMapping("/shop")
+    public List<Shop> getShops() {
+        List<Shop> shops = shopRepository.findAll();
+        shops.forEach(l -> l.setMaps(null));
+        return shops;
     }
 }

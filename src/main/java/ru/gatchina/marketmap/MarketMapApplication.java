@@ -81,8 +81,8 @@ public class MarketMapApplication implements CommandLineRunner {
 
     private void createShop() {
         Shop shop = new Shop();
-        shop.setLongitude(1.23);
-        shop.setLatitude(1.23);
+        shop.setLongitude(30.128800);
+        shop.setLatitude(59.575300);
         shop.setNetwork(networkRepository.findAll().get(0));
 
         List<Product> products = productRepository.findAll();

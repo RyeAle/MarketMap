@@ -8,7 +8,6 @@ import java.util.Optional;
 
 public interface ShopRepository extends JpaRepository<Shop, Integer> {
 
-    @Override
     @EntityGraph("shop.blocks")
-    Optional<Shop> findById(Integer integer);
+    Optional<Shop> findWithBlocksById(Integer id);
 }
