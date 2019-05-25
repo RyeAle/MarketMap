@@ -49,6 +49,6 @@ public class Shop {
     private Set<Product> products;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonManagedReference
     private Network network;
 }

@@ -1,5 +1,6 @@
 package ru.gatchina.marketmap.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -18,10 +19,10 @@ public class Network {
 
     private String name;
 
-    private String urlPath;
+    private String logoUrl;
 
     @ToString.Exclude
-    @JsonManagedReference
+    @JsonBackReference
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "network", fetch = FetchType.LAZY)
     private Set<Shop> shops;

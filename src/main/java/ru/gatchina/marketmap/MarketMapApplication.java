@@ -48,9 +48,11 @@ public class MarketMapApplication implements CommandLineRunner {
     private void creatingCategory() {
         Category category1 = new Category();
         category1.setName("Молочные продукты");
+        category1.setLogoUrl("/img/categories/1.png");
 
         Category category2 = new Category();
         category2.setName("Хлебобулочные изделия");
+        category2.setLogoUrl("/img/categories/2.png");
         categoryRepository.save(category1);
         categoryRepository.save(category2);
     }
@@ -73,6 +75,7 @@ public class MarketMapApplication implements CommandLineRunner {
     private void createNetwork() {
         Network network = new Network();
         network.setName("Пятерочка");
+        network.setLogoUrl("/img/network/1.png");
         networkRepository.save(network);
     }
 
