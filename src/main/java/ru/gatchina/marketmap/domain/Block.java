@@ -1,11 +1,10 @@
 package ru.gatchina.marketmap.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.Set;
 
 @Data
 @Entity
@@ -21,4 +20,8 @@ public class Block {
 
     @ManyToOne
     private Category category;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Set<Product> products;
 }
