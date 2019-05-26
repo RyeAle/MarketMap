@@ -1,13 +1,17 @@
 package ru.gatchina.marketmap.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import ru.gatchina.marketmap.domain.Block;
+import ru.gatchina.marketmap.domain.Map;
 import ru.gatchina.marketmap.domain.Product;
 import ru.gatchina.marketmap.domain.Shop;
 import ru.gatchina.marketmap.repository.BlockRepository;
+import ru.gatchina.marketmap.repository.MapRepository;
 import ru.gatchina.marketmap.repository.ShopRepository;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -20,6 +24,9 @@ public class MapController {
 
     @Autowired
     private BlockRepository blockRepository;
+
+    @Autowired
+    private MapRepository mapRepository;
 
     @GetMapping("/block/{id}")
     public Set<Product> getBlock(@PathVariable int id) {
@@ -37,6 +44,16 @@ public class MapController {
             return sh;
         }
         return null;
+    }
+
+    @PostMapping("/map/add")
+    public void addMap(@RequestParam String json) {
+        try {
+            Map map = new ObjectMapper().readValue(json, Map.class);
+            mapRepository.save(map);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @GetMapping("/shop")
