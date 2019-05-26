@@ -25,11 +25,12 @@
       stepsEnum: [
         {
           step: 'shelf',
-          color: '#F9EAC0'
-        },
-        {
-          step: 'shelfCategory',
-          color: '#fff'
+          color: '#F9EAC0',
+          category: {
+            // step: 'shelfCategory',
+            id: '',
+            products: {}
+          }
         },
         {
           step: 'pass',
@@ -43,19 +44,36 @@
           step: 'cash',
           color: '#515151'
         },
-        {
-          step: 'products',
-          color: ''
-        }
       ]
     }),
     methods: {
       goNextStep() {
         this.currentStep++;
+        if (this.currentStep > 4) {
+          this.sendMap();
+        }
       },
       goPrevStep() {
         this.currentStep--;
       },
+      sendMap() {
+        let blocks = document.getElementsByClassName('clickable');
+        let map = [];
+        // console.log(blocks)
+        Array.from(blocks)
+          .map((val, i) => {
+            let idarray = val.id.split(':');
+            if (val.getAttribute('category') != undefined) {
+              map[i] = {
+                x: idarray[1],
+                y: idarray[2],
+                blockType: val.category,
+                category: {}
+              };
+            }
+          });
+        console.log(map);
+      }
     },
     mounted() {
       let angleScale = {
@@ -72,19 +90,19 @@
         let elem = obj[i];
         obj[i].addEventListener('click', () => {
           if (obj[i].getAttribute('category') !== undefined) {
-            obj[i].setAttribute('style', `fill: ${this.stepsEnum[this.currentStep].color}`);
+            obj[i].setAttribute('style', `fill: ${this.stepsEnum[this.currentStep].color}; stroke: #000`);
             obj[i].setAttribute('category', this.stepsEnum[this.currentStep].step);
-            if (this.currentStep == 3 && elem.tagName != 'image') {
+            if (this.currentStep == 2 && elem.tagName != 'image') {
               const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
               // TODO
               console.error('!!!');
               image.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', './door.png');
               image.setAttribute('width', elem.width.baseVal.value);
               image.setAttribute('height', elem.height.baseVal.value);
-              image.setAttribute('x', elem.x.baseVal.value );
-              image.setAttribute('y', elem.y.baseVal.value );
+              image.setAttribute('x', elem.x.baseVal.value);
+              image.setAttribute('y', elem.y.baseVal.value);
               image.setAttribute('id', elem.id);
-              image.setAttribute('class', 'shelf');
+              image.setAttribute('class', 'clickable');
               obj[i].parentNode.replaceChild(image, obj[i]);
             } else if (this.currentStep == 3) {
               const block = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
