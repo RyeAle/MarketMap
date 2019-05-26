@@ -18,8 +18,9 @@
 }
 
 .pass {
-    fill: antiquewhite;
+    fill: aliceblue;
 }
-.shelf {
-    background-color: aquamarine;
+
+.shelf-bg {
+    fill: rgb(239, 216, 185);
 }

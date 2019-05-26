@@ -7,7 +7,14 @@ export default function objectToSvg(floor) {
     'viewBox', `0 0 ${blockSize * floor.width} ${blockSize * floor.height}`);
   floor.blocks.forEach(block => {
     const a = block.category != undefined;
-    const b = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    const b = document.createElementNS("http://www.w3.org/2000/svg", `${a ? "image" : "rect"}`);
+    if (a) {
+      b.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', b.category.logoUrl);
+      const c = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      setAttrs(c, "width", blockSize, "height", blockSize, "x", block.x * blockSize, "y",
+        (floor.height - block.y) * blockSize, "id", `shelf-bg:${block.id}`, "class", "shelf-bg");
+      svg.append(c);
+    }
     setAttrs(b, "width", blockSize, "height", blockSize, "x", block.x * blockSize, "y",
       (floor.height - block.y) * blockSize, "id", `${a ? "shelf" : "pass"}:${block.id}`, "class", `${a ? "shelf" : "pass"}`);
     svg.append(b);
