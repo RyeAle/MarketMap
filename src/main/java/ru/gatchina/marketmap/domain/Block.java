@@ -3,10 +3,12 @@ package ru.gatchina.marketmap.domain;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
 import java.util.Set;
 
 @Data
@@ -17,16 +19,20 @@ public class Block {
 
     @Id
     @GeneratedValue
+    @JsonView(Shop.Default.class)
     private Integer id;
 
+    @JsonView(Shop.Default.class)
     private Integer x;
 
+    @JsonView(Shop.Default.class)
     private Integer y;
 
+    @JsonView(Shop.Default.class)
     private BlockType blockType;
 
     @ManyToOne
-    @JsonBackReference
+    @JsonView(Shop.Default.class)
     private Category category;
 
     @ManyToOne

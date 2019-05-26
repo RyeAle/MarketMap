@@ -81,7 +81,7 @@ public class MarketMapApplication implements CommandLineRunner {
         for (String category : categories) {
             Category ct = new Category();
             ct.setName(category);
-            ct.setLogoUrl("/img/categories/" + (++i));
+            ct.setLogoUrl("/img/categories/" + (++i) + ".png");
             categoryRepository.save(ct);
         }
     }
@@ -120,29 +120,29 @@ public class MarketMapApplication implements CommandLineRunner {
         List<Product> products = productRepository.findAll();
 
         Shop shop1 = new Shop();
-        shop1.setLatitude(59.937785);
-        shop1.setLongitude(30.332520);
+        shop1.setLatitude(59.967678);
+        shop1.setLongitude(30.312250);
         shop1.setOpenTime(Time.valueOf(LocalTime.of(12, 0)));
         shop1.setCloseTime(Time.valueOf(LocalTime.of(2, 0)));
         shop1.setNetwork(networks.get(0));
 
         Shop shop2 = new Shop();
-        shop2.setLatitude(59.940773);
-        shop2.setLongitude(30.328132);
+        shop2.setLatitude(59.970108);
+        shop2.setLongitude(30.314461);
         shop2.setOpenTime(Time.valueOf(LocalTime.of(12, 0)));
         shop2.setCloseTime(Time.valueOf(LocalTime.of(1, 0)));
         shop2.setNetwork(networks.get(1));
 
         Shop shop3 = new Shop();
-        shop3.setLatitude(59.942251);
-        shop3.setLongitude(30.334666);
+        shop3.setLatitude(59.973569);
+        shop3.setLongitude(30.323950);
         shop3.setOpenTime(Time.valueOf(LocalTime.of(13, 0)));
         shop3.setCloseTime(Time.valueOf(LocalTime.of(0, 0)));
         shop3.setNetwork(networks.get(2));
 
         Shop shop4 = new Shop();
-        shop4.setLatitude(59.936130);
-        shop4.setLongitude(30.335696);
+        shop4.setLatitude(59.964023);
+        shop4.setLongitude(30.326576);
         shop4.setOpenTime(Time.valueOf(LocalTime.of(13, 0)));
         shop4.setCloseTime(Time.valueOf(LocalTime.of(1, 0)));
         shop4.setNetwork(networks.get(0));
@@ -269,7 +269,7 @@ public class MarketMapApplication implements CommandLineRunner {
         }
 
         for (int i = 0; i < 7; i++) {
-            Block bl = new Block(10, 9 - i);
+            Block bl = new Block(11, 9 - i);
             bl.setCategory(categories.stream().filter(c -> c.getName().
                     equals("Мясные продукты")).findFirst().get());
             if (i != 0 && i != 3) {

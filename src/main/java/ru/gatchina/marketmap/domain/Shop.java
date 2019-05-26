@@ -1,10 +1,7 @@
 package ru.gatchina.marketmap.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -28,20 +25,31 @@ import java.util.Set;
 public class Shop {
     @Id
     @GeneratedValue
+    @JsonView(Default.class)
     private Integer id;
 
+    @JsonView(Default.class)
     private Double longitude;
 
+    @JsonView(Default.class)
     private Double latitude;
 
+    @JsonView(Default.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH.mm")
     private Date openTime;
 
+    @JsonView(Default.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "HH.mm")
     private Date closeTime;
 
+    @ManyToOne
+    @JsonManagedReference
+    @JsonView(Default.class)
+    private Network network;
+
     @ToString.Exclude
     @JsonManagedReference
+    @JsonView(Default.class)
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "shop", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Map> maps;
@@ -55,7 +63,5 @@ public class Shop {
     )
     private Set<Product> products;
 
-    @ManyToOne
-    @JsonManagedReference
-    private Network network;
+    public class Default{}
 }
