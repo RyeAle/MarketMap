@@ -5,14 +5,14 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Set;
 
 @Data
 @Entity
+@NamedEntityGraphs({
+        @NamedEntityGraph(name = "category.all", includeAllAttributes = true)
+})
 public class Category {
 
     @Id
@@ -26,6 +26,6 @@ public class Category {
     @ToString.Exclude
     @JsonManagedReference
     @EqualsAndHashCode.Exclude
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private Set<Product> products;
 }

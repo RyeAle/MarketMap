@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ru.gatchina.marketmap.domain.*;
 import ru.gatchina.marketmap.domain.Map;
+import ru.gatchina.marketmap.domain.*;
 import ru.gatchina.marketmap.repository.*;
 
 import java.sql.Time;
@@ -281,6 +281,17 @@ public class MarketMapApplication implements CommandLineRunner {
             bl.setBlockType(BlockType.SHELF);
             bl.setMap(map);
             shelfs.add(bl);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Block bl1 = new Block(4, 3 - i);
+            Block bl2 = new Block(7, 4 - i);
+            bl1.setMap(map);
+            bl2.setMap(map);
+            bl1.setBlockType(BlockType.CASH);
+            bl2.setBlockType(BlockType.CASH);
+            result.add(bl1);
+            result.add(bl2);
         }
         result.addAll(passes);
         result.addAll(shelfs);
