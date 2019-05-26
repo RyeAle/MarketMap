@@ -38,7 +38,7 @@ export function createGrid(n, m) {
   return svg;
 }
 
-export default function dropMarkup(b) {
+export function dropMarkup(b) {
   setAttrs(b, 'style', 'stroke:#000; fill:#FFF', 'class', 'clickable', 'id', `unmapped:${b.x}:${b.y}`);
 }
 

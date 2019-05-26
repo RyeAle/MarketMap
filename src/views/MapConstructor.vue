@@ -2,7 +2,6 @@
   <div>
     <h4>{{stages[currentStage].header}}</h4>
     <div id="svgmap" class="content"></div>
-    <!--<v-dialog v-model="dialog" width="90%"/>-->
     <button
       @click="goNextStep"
       style="position: absolute; bottom: 0; background: #666; width: 100px; height: 50px;">
@@ -14,15 +13,26 @@
       style="position: absolute; bottom: 0; left: 20px; background: #666; width: 100px; height: 50px;">
       Go prev
     </button>
+    <v-dialog
+      v-model="showCategoryPopup"
+      width="500"
+      scrollable
+    >
+      <category-item v-for="item in categoryList" :key="item.id" :name="item.name" :imgUrl="item.logoUrl">
+
+      </category-item>
+    </v-dialog>
   </div>
 </template>
 
 <script>
-  import { createGrid } from '../api/svg';
+  import { createGrid, dropMarkup } from '../api/svg';
   import interact from 'interactjs';
   import axios from 'axios';
+  import CategoryItem from '../components/CategoryItem.vue';
 
   export default {
+    components: { CategoryItem },
     props: {
       mapWidth: {
         type: Number,
@@ -34,10 +44,12 @@
       },
     },
     data: () => ({
+      currentCategoryPopupShelf: {},
       currentStage: 0,
       currentBindingBlock: {},
       showCategoryPopup: false,
       showProductsPopup: false,
+      categoryList: [],
       stages: [
         {
           order: 0,
@@ -138,7 +150,8 @@
           });
       },
       goNextStep() {
-        if (this.currentStage > this.stages.length - 1) {
+        console.log(this.currentStage, this.stages.length - 1, this.currentStage > this.stages.length - 1);
+        if (this.currentStage < this.stages.length - 1) {
           this.currentStage++;
         } else {
           this.sendMap();
@@ -154,6 +167,12 @@
 
       },
     },
+    created() {
+      axios.get('http://192.168.42.55:8080/category')
+        .then(res => {
+          this.categoryList = res.data;
+        })
+    },
     mounted() {
       let angleScale = {
         angle: 0,
@@ -165,12 +184,16 @@
       container.append(scalable);
       const mapBlocks = document.querySelectorAll('.clickable');
       mapBlocks.forEach(block => {
-          block.addEventListener('click', () => {
+          block.addEventListener('click', (event) => {
               let element = block;
+              console.log(event);
               if (element.getAttribute('category')) {
                 switch (this.currentStage) {
                   case 1:
-                    this.showCategoryPopup = true;
+                    if (event.target.style.fill == 'rgb(249, 234, 192)') {
+                      this.showCategoryPopup = true;
+                      this.currentCategoryPopupShelf = event.target;
+                    }
                     break;
                   case 3:
                     if (element.tagName !== 'image') {
@@ -181,13 +204,30 @@
                     this.showProductsPopup = true;
                     break;
                   default:
-                    console.log('я от бабушки ушел и от дедушки ушел')
+                    console.log('я от бабушки ушел и от дедушки ушел');
                     break;
                 }
               } else {
-                console.log('hello!!!');
-                element.setAttribute('style', `fill: ${this.stages[this.currentStage].color}; stroke: #000`);
-                element.setAttribute('category', this.stages[this.currentStage].stage);
+
+
+                switch (this.currentStage) {
+                  case 1:
+                    this.showCategoryPopup;
+                    break;
+                  case 3:
+                    if (element.tagName !== 'image') {
+                      replaceElement(element);
+                    }
+                    break;
+                  case 5:
+                    this.showProductsPopup = true;
+                    break;
+                  default:
+                    console.log('hello!!!');
+                    element.setAttribute('style', `fill: ${this.stages[this.currentStage].color}; stroke: #000`);
+                    element.setAttribute('category', this.stages[this.currentStage].stage);
+                    break;
+                }
               }
             }
           );
