@@ -24,11 +24,18 @@
 
   export default {
     props: {
-      mapWidth: Number,
-      mapHeight: Number,
+      mapWidth: {
+        type: Number,
+        default: 10
+      },
+      mapHeight: {
+        type: Number,
+        default: 10
+      },
     },
     data: () => ({
       currentStage: 0,
+      currentBindingBlock: {},
       showCategoryPopup: false,
       showProductsPopup: false,
       stages: [
@@ -69,7 +76,8 @@
       ],
     }),
     methods: {
-      bindClickOnElement(element) {
+      bindClickOnElement() {
+        let element = this.currentBindingBlock;
         if (element.getAttribute('category')) {
           switch (this.currentStage) {
             case 1:
@@ -78,13 +86,13 @@
             case 3:
               if (element.tagName !== 'image') {
                 replaceElement(element);
-              } else {
-                break;
               }
+              break;
             case 5:
               this.showProductsPopup = true;
               break;
             default:
+              console.log('hello!!!');
               element.setAttribute('style', `fill: ${this.stages[this.currentStage].color}; stroke: #000`);
               element.setAttribute('category', this.stages[this.currentStage].stage);
               break;
@@ -128,10 +136,9 @@
           .catch(function (error) {
             console.log(error);
           });
-        console.log(json);
       },
       goNextStep() {
-        if (this.currentStage + 1 > this.stages.length - 1) {
+        if (this.currentStage > this.stages.length - 1) {
           this.currentStage++;
         } else {
           this.sendMap();
@@ -156,9 +163,89 @@
       scalable.id = 'svg';
       const container = document.getElementById('svgmap');
       container.append(scalable);
-      const obj = document.getElementsByClassName('clickable');
-      
+      const mapBlocks = document.querySelectorAll('.clickable');
+      mapBlocks.forEach(block => {
+          block.addEventListener('click', () => {
+              let element = block;
+              if (element.getAttribute('category')) {
+                switch (this.currentStage) {
+                  case 1:
+                    this.showCategoryPopup = true;
+                    break;
+                  case 3:
+                    if (element.tagName !== 'image') {
+                      replaceElement(element);
+                    }
+                    break;
+                  case 5:
+                    this.showProductsPopup = true;
+                    break;
+                  default:
+                    console.log('я от бабушки ушел и от дедушки ушел')
+                    break;
+                }
+              } else {
+                console.log('hello!!!');
+                element.setAttribute('style', `fill: ${this.stages[this.currentStage].color}; stroke: #000`);
+                element.setAttribute('category', this.stages[this.currentStage].stage);
+              }
+            }
+          );
+        }
+      );
+
+      // drag and scale
+      interact(container)
+        .gesturable({
+          onstart: function (event) {
+            angleScale.angle -= event.angle;
+            scalable.classList.remove('reset');
+          },
+          onmove: function (event) {
+            const currentAngle = event.angle + angleScale.angle;
+            const currentScale = event.scale * angleScale.scale;
+
+            scalable.style.webkitTransform =
+              scalable.style.transform =
+                'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')';
+
+            dragMoveListener(event);
+          }
+        })
+        .draggable({
+          onmove: dragMoveListener
+        });
+
+      function dragMoveListener(event) {
+        var target = event.target,
+          x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
+          y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+        target.style.webkitTransform =
+          target.style.transform =
+            'translate(' + x + 'px, ' + y + 'px)';
+
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+      }
+
+      window.dragMoveListener = dragMoveListener;
     }
-  };
+  }
+  ;
 
 </script>
+
+<style>
+  .content {
+    width: 90%;
+    height: 90%;
+    z-index: 100;
+    margin: 10px auto auto;
+  }
+
+  #svg {
+    display: block;
+    touch-action: none;
+  }
+</style>
