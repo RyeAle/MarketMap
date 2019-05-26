@@ -18,6 +18,7 @@
 <script>
   import {createGrid} from '../api/svg';
   import interact from 'interactjs';
+  import axios from 'axios';
 
   export default {
     data: () => ({
@@ -71,14 +72,21 @@
               };
             }
           });
-        const json = JSON.stringify({
+        const data = {
           latitude: Math.random(),
           longitude: Math.random(),
-          width: document.getElementById("svg").width,
-          height: document.getElementById("svg").height,
+          width: document.getElementById("svg").viewBox.baseVal.width / 100,
+          height:  document.getElementById("svg").viewBox.baseVal.height / 100,
           floor: 1,
-          blocks: map
-        });
+          blocks: map.filter(it => it.x != null)
+        };
+        axios.post('http://192.168.42.55:8080/map/add', data)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
         console.log(json);
       }
     },

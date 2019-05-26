@@ -19,8 +19,7 @@
         :balloon="{header: 'header', body: 'body', footer: 'footer'}"
         :icon="{
                   layout: 'default#image',
-                  imageHref:
-                  'https://www.svgrepo.com/show/76519/dummy.svg',
+                  imageHref: 'http://192.168.43.95:8080/' + shop.network.logoUrl,
                   imageSize: [43, 55],
                   imageOffset: [-22, -55]
                 }"
