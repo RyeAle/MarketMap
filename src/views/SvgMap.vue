@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <div class="content"></div>
@@ -19,7 +20,6 @@
   import { createGrid } from '../api/svg';
   import interact from 'interactjs';
   import axios from 'axios';
-
   export default {
     data: () => ({
       currentStep: 0,
@@ -56,7 +56,6 @@
             elem.setAttribute('style', `fill: ${this.stepsEnum[this.currentStep].color}; stroke: #000`);
           }
           elem.setAttribute('category', this.stepsEnum[this.currentStep].step);
-
           if (this.currentStep == 3 && elem.tagName != 'image') {
             const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
             image.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', './door.png');
@@ -98,7 +97,6 @@
               });
             break;
           case 1:
-
             break;
           case 5:
             this.sendMap();
@@ -155,7 +153,6 @@
         let elem = obj[i];
         elem.addEventListener('click', eventFunction(elem));
       }
-
       interact(container)
         .gesturable({
           onstart: function (event) {
@@ -165,33 +162,26 @@
           onmove: function (event) {
             const currentAngle = event.angle + angleScale.angle;
             const currentScale = event.scale * angleScale.scale;
-
             scalable.style.webkitTransform =
               scalable.style.transform =
                 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')';
-
             dragMoveListener(event);
           }
         })
         .draggable({
           onmove: dragMoveListener
         });
-
       function dragMoveListener(event) {
         var target = event.target,
           x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
           y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
         target.style.webkitTransform =
           target.style.transform =
             'translate(' + x + 'px, ' + y + 'px)';
-
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
       }
-
       window.dragMoveListener = dragMoveListener;
-
     }
   };
 </script>
@@ -203,7 +193,6 @@
     z-index: 100;
     margin: 10px auto auto;
   }
-
   #svg {
     display: block;
     touch-action: none;

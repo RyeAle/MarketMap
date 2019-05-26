@@ -9,7 +9,7 @@ export default function objectToSvg(floor) {
     const a = block.category != undefined;
     const b = document.createElementNS("http://www.w3.org/2000/svg", `${a ? "image" : "rect"}`);
     if (a) {
-      b.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', b.category.logoUrl);
+      b.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', block.category.logoUrl);
       const c = document.createElementNS("http://www.w3.org/2000/svg", "rect");
       setAttrs(c, "width", blockSize, "height", blockSize, "x", block.x * blockSize, "y",
         (floor.height - block.y) * blockSize, "id", `shelf-bg:${block.id}`, "class", "shelf-bg");
