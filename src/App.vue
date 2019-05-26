@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-app>
-      <v-content fill class="pt-0">
+      <v-content fill class="pt-0" style="font-family: 'Raleway', sans-serif;">
         <router-view/>
       </v-content>
     </v-app>

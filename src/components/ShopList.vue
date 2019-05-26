@@ -6,17 +6,22 @@
     <v-btn
       id="showupBtn"
       absolute
-      style="left:50%; bottom: 0; transform: translate(-50%); width: 100%; height: 5%; background-color: white"
+      style="left:50%; bottom: 0; transform: translate(-50%); width: 100%; height: 8%;
+      background-color: white"
       @click.stop="toggle"
+      class="text-xs-center pb-2 pt-2"
     >
-      <v-icon dark>list</v-icon>
+
+      <v-flex><div
+        style="background-color: black; width: 40px; height: 3px; border-radius: 3px;
+        margin:auto; margin-bottom: 4px; margin-bottom: 3px;"></div>Ближайшие магазины</v-flex>
     </v-btn>
     <div class="shops" style="position: absolute; bottom: 0;
     left: 0;
     overflow: scroll;
     background-color: white">
 
-      <v-container fluid class="pt-2">
+      <v-container fluid class="pt-0">
         <v-layout column align-space-around fill-height>
             <list-row v-for="shop in shops" :key=shop.id :shop="shop" />
         </v-layout>

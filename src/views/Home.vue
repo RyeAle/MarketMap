@@ -5,9 +5,8 @@
       style="width: 100%; height: 100%"
       :coords="[59.9682258, 30.321530599999996]"
       zoom="10"
-      :controls="['zoomControl']"
+      :controls="['geolocationControl']"
       :detailed-controls=dc
-
     >
       <ymap-marker
         v-for="shop in shops"
@@ -15,7 +14,6 @@
         v-bind:marker-id=shop.id
         marker-type="placemark"
         :coords=coordsToArr(shop.latitude,shop.longitude)
-        hint-content="Hint content 1"
         :balloon="{header: 'header', body: 'body', footer: 'footer'}"
         :icon="{
                   layout: 'default#image',
@@ -45,15 +43,15 @@
         geolocationControl: {
           float: "none",
           position: {
-            left: "90px"
-
+            bottom: "133px",
+            left: "10px"
           }
         },
         routeEditor: {
           float: "none",
           position: {
-            left: "120px"
-
+            bottom: "90px",
+            left: "10px"
           }
         }
       },
