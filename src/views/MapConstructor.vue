@@ -36,16 +36,6 @@
 
   export default {
     components: { CategoryItem },
-    props: {
-      mapWidth: {
-        type: Number,
-        default: 10
-      },
-      mapHeight: {
-        type: Number,
-        default: 10
-      },
-    },
     data: () => ({
       currentCategoryPopupShelf: {},
       shopId: null,
@@ -166,7 +156,7 @@
         angle: 0,
         scale: 1,
       };
-      const scalable = createGrid(this.mapWidth, this.mapHeight);
+      const scalable = createGrid(this.$route.query.width, this.$route.query.height);
       scalable.id = 'svg';
       const container = document.getElementById('svgmap');
       container.append(scalable);

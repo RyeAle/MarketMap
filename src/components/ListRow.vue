@@ -24,7 +24,7 @@
             </v-layout>
         </v-flex>
         <v-flex xs2 class="text-xs-center">
-          <router-link v-bind:to="'/create?id=' + this.shop.id" tag="span">
+          <router-link v-bind:to="'/question?id=' + this.shop.id" tag="span">
             <v-icon>edit</v-icon>
            </router-link>
         </v-flex>
