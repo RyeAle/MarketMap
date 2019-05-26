@@ -1,13 +1,15 @@
 const blockSize = 100;
 
-function objectToSvg(floor) {
+export default function objectToSvg(floor) {
+  console.log(floor);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('width', '100%');
   svg.setAttribute('height', '100%');
   svg.setAttribute('viewBox', `0 0 ${blockSize * floor.width} ${blockSize * floor.height}`);
   floor.blocks.forEach(block => {
-    // const svgBlock = document.createElementNS(`xlink:href=%back_url%/${block.blockType.toLowerCase()}.png"`, "image");
-    const svgBlock = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+    //const svgBlock =
+    // document.createElementNS(`xlink:href=192.168.43.95:8080/${block.logoUrl}"`, "image");
+    // const svgBlock = document.createElementNS('http://www.w3.org/2000/svg', 'image');
     svgBlock.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', block.logoUrl);
     svgBlock.setAttribute('width', blockSize.toString());
     svgBlock.setAttribute('height', blockSize.toString());
