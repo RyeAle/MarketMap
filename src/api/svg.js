@@ -39,7 +39,7 @@ export function createGrid(n, m) {
 }
 
 export function dropMarkup(b) {
-  setAttrs(b, 'style', 'stroke:#000; fill:#FFF', 'class', 'clickable', 'id', `unmapped:${b.x}:${b.y}`);
+  setAttrs(b, 'style', 'stroke:#000; fill:#FFF', 'class', 'clickable', 'id', `unmapped:${b.x}:${b.y}`, 'category', undefined);
 }
 
 export function resizeSvg(svg, n, m) {
@@ -114,7 +114,7 @@ export function resizeSvg(svg, n, m) {
   svg.setAttribute('viewBox', `0 0 ${blockSize * n} ${blockSize * m}`);
 }
 
-function setAttrs(elem) {
+export function setAttrs(elem) {
   for (var i = 1; i < arguments.length; i += 2) {
     elem.setAttribute(arguments[i], arguments[i + 1]);
   }
