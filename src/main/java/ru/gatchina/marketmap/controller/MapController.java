@@ -47,7 +47,7 @@ public class MapController {
     }
 
     @PostMapping("/map/add")
-    public void addMap(@RequestParam String json) {
+    public void addMap(@RequestBody String json) {
         try {
             Map map = new ObjectMapper().readValue(json, Map.class);
             mapRepository.save(map);
@@ -61,5 +61,9 @@ public class MapController {
         List<Shop> shops = shopRepository.findAll();
         shops.forEach(l -> l.setMaps(null));
         return shops;
+    }
+    @GetMapping("/maplist")
+    public Iterable<Map> getMapList() {
+        return mapRepository.findAll();
     }
 }
