@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import SvgMap from './views/SvgMap.vue';
 import SvgMapView from './views/SvgMapView.vue';
+import MapConstructor from './views/MapConstructor.vue';
 
 Vue.use(Router);
 
@@ -18,8 +19,9 @@ export default new Router({
     {
       path: '/create',
       name: 'createMap',
-      component: SvgMap,
-      props: (route) => ({ query: route.query.q })
+      component: MapConstructor,
+      // component: SvgMap,
+      // props: (route) => ({ query: route.query.q })
     },
     {
       path: '/map',

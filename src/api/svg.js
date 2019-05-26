@@ -38,6 +38,10 @@ export function createGrid(n, m) {
   return svg;
 }
 
+export default function dropMarkup(b) {
+  setAttrs(b, 'style', 'stroke:#000; fill:#FFF', 'class', 'clickable', 'id', `unmapped:${b.x}:${b.y}`);
+}
+
 export function resizeSvg(svg, n, m) {
   let deltaN = Math.abs(n - svg.viewBox.baseVal.width / blockSize);
   const nOdd = deltaN % 2;
@@ -115,3 +119,16 @@ function setAttrs(elem) {
     elem.setAttribute(arguments[i], arguments[i + 1]);
   }
 }
+
+// function findWay(blocks, targets, x, y) {
+//   let found = [];
+//   targets.sort(a, b => Math.hypot(a.x - x, a.y - y) - Math.hypot(b.x - x, b.y - y));
+//   var dX = targets[0].x - x;
+//   var dY = targets[0].y - y;
+//   let list = [];
+//   while (found.length != targets.length) {
+//       if (dX > 0 && dY > 0) {
+//         if ()
+//       }
+//   }
+// }
