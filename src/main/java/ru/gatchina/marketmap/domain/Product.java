@@ -20,6 +20,7 @@ public class Product {
     private String name;
 
     @ManyToOne
+    @JsonBackReference
     private Category category;
 
     @JsonIgnore

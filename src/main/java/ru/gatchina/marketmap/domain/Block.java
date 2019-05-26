@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Block {
 
@@ -29,6 +31,11 @@ public class Block {
     @ManyToOne
     @JsonBackReference
     private Map map;
+
+    public Block(Integer x, Integer y) {
+        this.x = x;
+        this.y = y;
+    }
 
     @JsonManagedReference
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
