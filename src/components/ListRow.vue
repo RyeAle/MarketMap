@@ -8,7 +8,7 @@
           <v-layout column align-space-around>
             <v-flex class="mt-2">
               <span class="text-uppercase font-weight-bold mr-1">{{this.shop.network.name}}</span>
-              <span style="font-size: 0.85em">({{this.distance}})</span>
+              <span style="font-size: 0.85em">({{this.distance}}м)</span>
             </v-flex>
             <v-flex>
               {{this.address}}
@@ -24,9 +24,10 @@
 
 <script>
   import axios from 'axios'
+  import { getDistance } from 'geolib'
   export default {
     data:() => ({
-      address: null,
+      address: "qwerty",
       distance: 150
     }),
     props: ['shop'],
@@ -43,6 +44,14 @@
           console.log(error);
         }).finally(function () {
         });
+        navigator.geolocation.getCurrentPosition(position => {
+          this.distance = getDistance({
+              latitude: this.shop.latitude, longitude: this.shop.longitude },
+            { latitude: position.coords.latitude, longitude: position.coords.longitude }
+          );
+          console.log(this.distance)
+        });
+
     }
   }
 </script>
