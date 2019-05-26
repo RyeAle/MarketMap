@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-container>
     <h4>{{stages[currentStage].header}}</h4>
     <div id="svgmap" class="content"></div>
     <button
@@ -15,14 +15,15 @@
     </button>
     <v-dialog
       v-model="showCategoryPopup"
-      width="500"
+      max-width="400px"
       scrollable
     >
-      <category-item v-for="item in categoryList" :key="item.id" :name="item.name" :imgUrl="item.logoUrl">
-
-      </category-item>
+      <v-layout column>
+        <category-item v-for="item in categoryList" :key="item.id" :name="item.name"
+                       :imgUrl="item.logoUrl" :toggleDialog = toggleDialog :cbb = currentBindingBlock />
+      </v-layout>
     </v-dialog>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -88,35 +89,15 @@
       ],
     }),
     methods: {
-      bindClickOnElement() {
-        let element = this.currentBindingBlock;
-        if (element.getAttribute('category')) {
-          switch (this.currentStage) {
-            case 1:
-              this.showCategoryPopup = true;
-              break;
-            case 3:
-              if (element.tagName !== 'image') {
-                replaceElement(element);
-              }
-              break;
-            case 5:
-              this.showProductsPopup = true;
-              break;
-            default:
-              console.log('hello!!!');
-              element.setAttribute('style', `fill: ${this.stages[this.currentStage].color}; stroke: #000`);
-              element.setAttribute('category', this.stages[this.currentStage].stage);
-              break;
-          }
-        }
-      },
       replaceElementToImage(element) {
         const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
         image.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', './door.png');
       },
       replaceElementToRect(element) {
 
+      },
+      toggleDialog() {
+        this.showCategoryPopup = !this.showCategoryPopup;
       },
       sendMap() {
         let blocks = document.getElementsByClassName('clickable');
@@ -168,7 +149,7 @@
       },
     },
     created() {
-      axios.get('http://192.168.42.55:8080/category')
+      axios.get('http://192.168.43.95:8080/category')
         .then(res => {
           this.categoryList = res.data;
         })
@@ -191,6 +172,7 @@
                 switch (this.currentStage) {
                   case 1:
                     if (event.target.style.fill == 'rgb(249, 234, 192)') {
+                      this.currentBindingBlock = element;
                       this.showCategoryPopup = true;
                       this.currentCategoryPopupShelf = event.target;
                     }

@@ -1,15 +1,15 @@
 const blockSize = 100;
 
-export default function objectToSvg(floor) {
+export function objectToSvg(floor) {
   console.log(floor);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   setAttrs(svg, 'width', '100%', 'height', '100%',
-    'viewBox', `0 0 ${blockSize * floor.width} ${blockSize * floor.height}`);
+    'viewBox', `0 0 ${blockSize * floor.width} ${blockSize * floor.height}`, 'id', 'svg');
   floor.blocks.forEach(block => {
     const a = block.category != undefined;
     const b = document.createElementNS("http://www.w3.org/2000/svg", `${a ? "image" : "rect"}`);
     if (a) {
-      b.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', block.category.logoUrl);
+      b.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', "http://192.168.43.95:8080" + block.category.logoUrl);
       const c = document.createElementNS("http://www.w3.org/2000/svg", "rect");
       setAttrs(c, "width", blockSize, "height", blockSize, "x", block.x * blockSize, "y",
         (floor.height - block.y) * blockSize, "id", `shelf-bg:${block.id}`, "class", "shelf-bg");
@@ -114,7 +114,7 @@ export function resizeSvg(svg, n, m) {
   svg.setAttribute('viewBox', `0 0 ${blockSize * n} ${blockSize * m}`);
 }
 
-function setAttrs(elem) {
+export function setAttrs(elem) {
   for (var i = 1; i < arguments.length; i += 2) {
     elem.setAttribute(arguments[i], arguments[i + 1]);
   }
