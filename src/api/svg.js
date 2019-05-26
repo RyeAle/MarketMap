@@ -115,3 +115,9 @@ export function resizeSvg(svg, n, m) {
   }
   svg.setAttribute('viewBox', `0 0 ${blockSize * n} ${blockSize * m}`);
 }
+
+function setAttrs(elem) {
+  for (var i = 1; i < arguments.length; i+=2) {
+    elem.setAttribute(arguments[i], arguments[i+1]);
+  }
+}
