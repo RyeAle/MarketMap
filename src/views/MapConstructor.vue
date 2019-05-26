@@ -25,6 +25,17 @@
         />
       </v-layout>
     </v-dialog>
+    <router-link to="/">
+      <v-btn
+        id="showupBtn"
+        absolute
+        style="z-index:100; left:50%; bottom: 13%; transform: translate(-50%); width: 30%; height:
+          5%;
+          background-color: white"
+      >
+        НАЗАД
+      </v-btn>
+    </router-link>
   </v-container>
 </template>
 
