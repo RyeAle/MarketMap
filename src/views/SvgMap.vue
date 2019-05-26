@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import { createGrid } from '../api/svg';
+  import {createGrid} from '../api/svg';
   import interact from 'interactjs';
 
   export default {
@@ -59,20 +59,27 @@
       sendMap() {
         let blocks = document.getElementsByClassName('clickable');
         let map = [];
-        // console.log(blocks)
         Array.from(blocks)
-          .map((val, i) => {
-            let idarray = val.id.split(':');
+          .forEach((val, i) => {
+            let idArray = val.id.split(':');
             if (val.getAttribute('category') != undefined) {
               map[i] = {
-                x: idarray[1],
-                y: idarray[2],
+                x: idArray[1],
+                y: idArray[2],
                 blockType: val.category,
                 category: {}
               };
             }
           });
-        console.log(map);
+        const json = JSON.stringify({
+          latitude: Math.random(),
+          longitude: Math.random(),
+          width: document.getElementById("svg").width,
+          height:  document.getElementById("svg").height,
+          floor: 1,
+          blocks: map
+        });
+        console.log(json);
       }
     },
     mounted() {
@@ -82,9 +89,9 @@
       };
       let resetTimeout;
       const scalable = createGrid(10, 10);
+      scalable.id = "svg";
       const container = document.getElementsByClassName('content')[0];
       container.append(scalable);
-      // console.log(document.getElementsByClassName('clickable'));
       const obj = document.getElementsByClassName('clickable');
       for (let i = 0; i < obj.length; i++) {
         let elem = obj[i];
@@ -94,8 +101,6 @@
             obj[i].setAttribute('category', this.stepsEnum[this.currentStep].step);
             if (this.currentStep == 2 && elem.tagName != 'image') {
               const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-              // TODO
-              console.error('!!!');
               image.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', './door.png');
               image.setAttribute('width', elem.width.baseVal.value);
               image.setAttribute('height', elem.height.baseVal.value);

@@ -1,5 +1,5 @@
-const blockTypeEnum = Object.freeze([
-    'entry', 'quit', 'pass', 'shelf'
+var blockTypeEnum = Object.freeze([
+    'entry', 'cash', 'pass', 'shelf'
   ]
 );
 
