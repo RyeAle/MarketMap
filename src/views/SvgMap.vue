@@ -4,12 +4,12 @@
     <!--<v-dialog v-model="dialog" width="90%"/>-->
     <button
       @click="goNextStep"
-      style="position: absolute; bottom: 0; background: #666; width: 100px;height: 50px;">
+      style="position: absolute; bottom: 0; background: #666; width: 100px; height: 50px;">
       Go next
     </button>
     <button
       @click="goPrevStep"
-      style="position: absolute; bottom: 0; left: 20px; background: #666; width: 100px;height: 50px;">
+      style="position: absolute; bottom: 0; left: 20px; background: #666; width: 100px; height: 50px;">
       Go prev
     </button>
   </div>
@@ -29,7 +29,7 @@
         },
         {
           step: 'shelfCategory',
-          color: ''
+          color: '#fff'
         },
         {
           step: 'pass',
@@ -69,10 +69,33 @@
       // console.log(document.getElementsByClassName('clickable'));
       const obj = document.getElementsByClassName('clickable');
       for (let i = 0; i < obj.length; i++) {
+        let elem = obj[i];
         obj[i].addEventListener('click', () => {
           if (obj[i].getAttribute('category') !== undefined) {
             obj[i].setAttribute('style', `fill: ${this.stepsEnum[this.currentStep].color}`);
             obj[i].setAttribute('category', this.stepsEnum[this.currentStep].step);
+            if (this.currentStep == 3 && elem.tagName != 'image') {
+              const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+              // TODO
+              console.error('!!!');
+              image.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', './door.png');
+              image.setAttribute('width', elem.width.baseVal.value);
+              image.setAttribute('height', elem.height.baseVal.value);
+              image.setAttribute('x', elem.x.baseVal.value );
+              image.setAttribute('y', elem.y.baseVal.value );
+              image.setAttribute('id', elem.id);
+              image.setAttribute('class', 'shelf');
+              obj[i].parentNode.replaceChild(image, obj[i]);
+            } else if (this.currentStep == 3) {
+              const block = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+              block.setAttribute('style', 'stroke:#000; fill:#FFF');
+              block.setAttribute('width', elem.width.baseVal.value);
+              block.setAttribute('height', elem.height.baseVal.value);
+              block.setAttribute('x', elem.x.baseVal.value);
+              block.setAttribute('y', elem.y.baseVal.value);
+              block.setAttribute('class', 'clickable');
+              block.setAttribute('id', elem.id);
+            }
           } else {
             obj[i].setAttribute('category', this.stepsEnum[this.currentStep].step);
           }
@@ -87,8 +110,8 @@
             scalable.classList.remove('reset');
           },
           onmove: function (event) {
-            var currentAngle = event.angle + angleScale.angle;
-            var currentScale = event.scale * angleScale.scale;
+            const currentAngle = event.angle + angleScale.angle;
+            const currentScale = event.scale * angleScale.scale;
 
             scalable.style.webkitTransform =
               scalable.style.transform =
@@ -112,7 +135,7 @@
           target.style.transform =
             'translate(' + x + 'px, ' + y + 'px)';
 
-        // update the posiion attributes
+        // update the position attributes
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
       }
@@ -136,10 +159,5 @@
     touch-action: none;
     z-index: 100;
     margin: 10px auto auto;
-  }
-
-  .checked {
-    stroke: #000;
-    fill: #555;
   }
 </style>
