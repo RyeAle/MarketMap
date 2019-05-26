@@ -102,4 +102,9 @@ public class MapController {
     public Map getMap(@PathVariable Integer id) {
         return mapRepository.findWithAllById(id).orElse(null);
     }
+
+    @GetMapping("/maplist")
+    public Iterable<Map> getMapList() {
+        return mapRepository.findAll();
+    }
 }
