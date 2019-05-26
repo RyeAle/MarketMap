@@ -75,7 +75,7 @@
           latitude: Math.random(),
           longitude: Math.random(),
           width: document.getElementById("svg").width,
-          height:  document.getElementById("svg").height,
+          height: document.getElementById("svg").height,
           floor: 1,
           blocks: map
         });
@@ -87,7 +87,6 @@
         angle: 0,
         scale: 1,
       };
-      let resetTimeout;
       const scalable = createGrid(10, 10);
       scalable.id = "svg";
       const container = document.getElementsByClassName('content')[0];
@@ -127,9 +126,7 @@
       interact(container)
         .gesturable({
           onstart: function (event) {
-            angleScale.angle -= event.angle;
-
-            clearTimeout(resetTimeout);
+            angleScale.angle -= event.angle; // ????
             scalable.classList.remove('reset');
           },
           onmove: function (event) {
@@ -149,25 +146,15 @@
 
       function dragMoveListener(event) {
         var target = event.target,
-          // keep the dragged position in the data-x/data-y attributes
           x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
           y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-        // translate the element
         target.style.webkitTransform =
           target.style.transform =
             'translate(' + x + 'px, ' + y + 'px)';
 
-        // update the position attributes
         target.setAttribute('data-x', x);
         target.setAttribute('data-y', y);
-      }
-
-      function reset() {
-        scalable.style.webkitTransform = scalable.style.transform = 'scale(1)';
-
-        angleScale.angle = 0;
-        angleScale.scale = 1;
       }
 
       window.dragMoveListener = dragMoveListener;
@@ -179,8 +166,12 @@
   .content {
     width: 90%;
     height: 90%;
-    touch-action: none;
     z-index: 100;
     margin: 10px auto auto;
+  }
+
+  #svg {
+    display: block;
+    touch-action: none;
   }
 </style>
