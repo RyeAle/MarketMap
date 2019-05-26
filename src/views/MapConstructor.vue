@@ -20,7 +20,9 @@
     >
       <v-layout column>
         <category-item v-for="item in categoryList" :key="item.id" :name="item.name"
-                       :imgUrl="item.logoUrl" :toggleDialog = toggleDialog :cbb = currentBindingBlock />
+                       :imgUrl="item.logoUrl" :toggleDialog = toggleDialog :cbb = currentBindingBlock
+                       :categoryId="item.id"
+        />
       </v-layout>
     </v-dialog>
   </v-container>
@@ -118,17 +120,18 @@
               map[i] = {
                 x: idArray[1],
                 y: idArray[2],
-                blockType: val.category,
-                category: {}
+                type: val.category
               };
             }
           });
         const data = {
+          shopId: this.shopId,
           width: document.getElementById('svg').viewBox.baseVal.width / 100,
           height: document.getElementById('svg').viewBox.baseVal.height / 100,
           blocks: map.filter(it => it.x != null)
         };
-        axios.post('http://192.168.42.55:8080/map/add', data)
+        console.log(data);
+        axios.post('http://192.168.42.55:8080/map', data)
           .then(function (response) {
             console.log(response);
           })

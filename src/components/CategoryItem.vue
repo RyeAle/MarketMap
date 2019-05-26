@@ -17,7 +17,7 @@
       func: () => {
       }
     }),
-    props: ['imgUrl', 'name', 'toggleDialog', 'cbb', 'doc'],
+    props: ['imgUrl', 'name', 'toggleDialog', 'cbb', 'doc', 'id'],
     mounted() {
       this.func = () => {
         const img = document.createElementNS('http://www.w3.org/2000/svg', 'image');
@@ -28,6 +28,7 @@
           this.cbb.y.baseVal.value, 'id', `shelf:${this.cbb.id}`, 'class',
           'shelf');
         document.getElementById('svg').append(img);
+        this.cbb.setAttribute("categoryId", this.id);
         this.toggleDialog();
       }
     }

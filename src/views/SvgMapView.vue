@@ -17,7 +17,7 @@
 
 <script>
   import axios from 'axios'
-  import objectToSvg from '../api/svg.js'
+  import {objectToSvg} from '../api/svg.js'
   import interact from 'interactjs'
 
   export default {
