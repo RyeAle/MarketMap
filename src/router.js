@@ -18,7 +18,8 @@ export default new Router({
     {
       path: '/create',
       name: 'createMap',
-      component: SvgMap
+      component: SvgMap,
+      props: (route) => ({ query: route.query.q })
     },
     {
       path: '/map',

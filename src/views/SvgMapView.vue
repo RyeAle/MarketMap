@@ -1,6 +1,17 @@
 <template>
   <v-container fill-height fluid style="background-color: #666666">
       <div class="content" style="height: 100%;"></div>
+    <router-link to="/">
+      <v-btn
+        id="showupBtn"
+        absolute
+        style="z-index:100; left:50%; bottom: 5%; transform: translate(-50%); width: 30%; height:
+          5%;
+          background-color: white"
+      >
+        НАЗАД
+      </v-btn>
+    </router-link>
   </v-container>
 </template>
 
