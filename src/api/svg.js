@@ -3,19 +3,13 @@ const blockSize = 100;
 export default function objectToSvg(floor) {
   console.log(floor);
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('width', '100%');
-  svg.setAttribute('height', '100%');
-  svg.setAttribute('viewBox', `0 0 ${blockSize * floor.width} ${blockSize * floor.height}`);
+  setAttrs(svg, 'width', '100%', 'height', '100%',
+    'viewBox', `0 0 ${blockSize * floor.width} ${blockSize * floor.height}`);
   floor.blocks.forEach(block => {
-    const b = document.createElementNS("http://www.w3.org/2000/svg", `${block.category ? "image" : "rect"}`);
-    if (b.tagName == "image")
-      b.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `${block.category ? "http://192.168.43.95:8080" + block.category.logoUrl : "http://placekitten.com/32/32"}`);
-    b.setAttribute('width', blockSize.toString());
-    b.setAttribute('height', blockSize.toString());
-    b.setAttribute('x', block.x * blockSize);
-    b.setAttribute('y', (floor.height - block.y) * blockSize);
-    b.setAttribute('id', `${b.tagName == "image" ? "shelf" : "pass"}:${block.id}`);
-    b.setAttribute('class', `${b.tagName == "image" ? "shelf" : "pass"}`);
+    const a = block.category != undefined;
+    const b = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+    setAttrs(b, "width", blockSize, "height", blockSize, "x", block.x * blockSize, "y",
+      (floor.height - block.y) * blockSize, "id", `${a ? "shelf" : "pass"}:${block.id}`, "class", `${a ? "shelf" : "pass"}`);
     svg.append(b);
   });
   return svg;
@@ -24,20 +18,14 @@ export default function objectToSvg(floor) {
 // n - x, m - y
 export function createGrid(n, m) {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svg.setAttribute('width', '100%');
-  svg.setAttribute('height', '100%');
-  svg.setAttribute('viewBox', `0 0 ${blockSize * n} ${blockSize * m}`);
+  setAttrs(svg, 'width', '100%', 'height', '100%', 'viewBox', `0 0 ${blockSize * n} ${blockSize * m}`);
   for (let i = 0; i < n; i++) {
     for (let j = 0; j < m; j++) {
-      const block = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      block.setAttribute('style', 'stroke:#000; fill:#FFF');
-      block.setAttribute('width', blockSize.toString());
-      block.setAttribute('height', blockSize.toString());
-      block.setAttribute('x', j * blockSize);
-      block.setAttribute('y', i * blockSize);
-      block.setAttribute('class', 'clickable');
-      block.setAttribute('id', `unmapped:${j}:${i}`);
-      svg.append(block);
+      const b = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      setAttrs(b, 'style', 'stroke:#000; fill:#FFF', 'width', blockSize.toString(),
+        'height', blockSize.toString(), 'x', j * blockSize, 'y', i * blockSize,
+        'class', 'clickable', 'id', `unmapped:${j}:${i}`);
+      svg.append(b);
     }
   }
   return svg;
@@ -116,7 +104,7 @@ export function resizeSvg(svg, n, m) {
 }
 
 function setAttrs(elem) {
-  for (var i = 1; i < arguments.length; i+=2) {
-    elem.setAttribute(arguments[i], arguments[i+1]);
+  for (var i = 1; i < arguments.length; i += 2) {
+    elem.setAttribute(arguments[i], arguments[i + 1]);
   }
 }
