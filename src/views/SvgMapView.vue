@@ -1,6 +1,6 @@
 <template>
-  <v-container fill-height fluid>
-      <div class="content"></div>
+  <v-container fill-height fluid style="background-color: #666666">
+      <div class="content" style="height: 100%;"></div>
   </v-container>
 </template>
 

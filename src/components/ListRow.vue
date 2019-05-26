@@ -1,25 +1,30 @@
 <template>
   <router-link v-bind:to="'/map?id=' + this.shop.id" tag="div">
     <v-flex class="my-1 text-xs-left">
-      <v-layout row>
-        <v-flex xs3>
+      <v-layout row align-center>
+        <v-flex xs2 >
           <v-img :src="'http://192.168.43.95:8080/' + this.shop.network.logoUrl"
                  class="ml-2 my-2"></v-img>
   <!--        'https://lh6.googleusercontent.com/-l0_KVe2-FaE/AAAAAAAAAAI/AAAAAAAAcbo/_6Y8NSP3pOg/photo.jpg'-->
         </v-flex>
-        <v-flex xs9 class="pl-4">
+        <v-flex xs8 class="pl-4">
             <v-layout column align-space-around>
               <v-flex class="mt-2">
                 <span class="text-uppercase font-weight-bold mr-1">{{this.shop.network.name}}</span>
                 <span style="font-size: 0.85em">({{this.distance}}м)</span>
               </v-flex>
-              <v-flex class="no-wrap">
+              <v-divider />
+              <v-flex>
                 {{this.address}}
               </v-flex>
+              <v-divider />
               <v-flex>
                 {{this.shop.openTime}}-{{this.shop.closeTime}}
               </v-flex>
             </v-layout>
+        </v-flex>
+        <v-flex xs2 class="text-xs-center">
+          <v-icon>edit</v-icon>
         </v-flex>
       </v-layout>
     </v-flex>
