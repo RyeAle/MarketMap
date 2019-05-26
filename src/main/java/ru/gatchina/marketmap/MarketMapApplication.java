@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import ru.gatchina.marketmap.domain.*;
 import ru.gatchina.marketmap.repository.*;
 
+import java.sql.Time;
+import java.time.LocalTime;
 import java.util.HashSet;
 import java.util.List;
 
@@ -83,6 +85,8 @@ public class MarketMapApplication implements CommandLineRunner {
         Shop shop = new Shop();
         shop.setLongitude(30.128800);
         shop.setLatitude(59.575300);
+        shop.setOpenTime(Time.valueOf(LocalTime.of(12, 0)));
+        shop.setCloseTime(Time.valueOf(LocalTime.of(2, 0)));
         shop.setNetwork(networkRepository.findAll().get(0));
 
         List<Product> products = productRepository.findAll();
