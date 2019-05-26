@@ -2,7 +2,9 @@
   <v-flex class="my-1 text-xs-left">
     <v-layout row>
       <v-flex xs3>
-        <v-img :src="'https://lh6.googleusercontent.com/-l0_KVe2-FaE/AAAAAAAAAAI/AAAAAAAAcbo/_6Y8NSP3pOg/photo.jpg'" class="ml-2 my-2"></v-img>
+        <v-img :src="'http://192.168.43.95:8080/' + this.shop.network.logoUrl"
+               class="ml-2 my-2"></v-img>
+<!--        'https://lh6.googleusercontent.com/-l0_KVe2-FaE/AAAAAAAAAAI/AAAAAAAAcbo/_6Y8NSP3pOg/photo.jpg'-->
       </v-flex>
       <v-flex xs9 class="pl-4">
           <v-layout column align-space-around>
@@ -10,7 +12,7 @@
               <span class="text-uppercase font-weight-bold mr-1">{{this.shop.network.name}}</span>
               <span style="font-size: 0.85em">({{this.distance}}м)</span>
             </v-flex>
-            <v-flex>
+            <v-flex class="no-wrap">
               {{this.address}}
             </v-flex>
             <v-flex>
