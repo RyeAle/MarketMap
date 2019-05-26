@@ -1,5 +1,5 @@
 var blockTypeEnum = Object.freeze([
-    'entry', 'quit', 'pass', 'shelf'
+    'entry', 'cash', 'pass', 'shelf'
   ]
 );
 
