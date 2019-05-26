@@ -16,7 +16,7 @@
 </template>
 
 <script>
-  import {createGrid} from '../api/svg';
+  import { createGrid } from '../api/svg';
   import interact from 'interactjs';
   import axios from 'axios';
 
@@ -27,11 +27,13 @@
         {
           step: 'shelf',
           color: '#F9EAC0',
-          category: {
-            // step: 'shelfCategory',
-            id: '',
-            products: {}
-          }
+          header: 'Отметьте существующие стеллажи с товарами на сетке'
+        },
+        {
+          step: 'shelfCategory',
+          id: '',
+          products: {},
+          header: 'Обозначьте секции с продуктами'
         },
         {
           step: 'pass',
@@ -48,10 +50,59 @@
       ]
     }),
     methods: {
+      eventFunction(elem) {
+        if (elem.getAttribute('category') !== undefined) {
+          if (this.stepsEnum[this.currentStep].color != undefined) {
+            elem.setAttribute('style', `fill: ${this.stepsEnum[this.currentStep].color}; stroke: #000`);
+          }
+          elem.setAttribute('category', this.stepsEnum[this.currentStep].step);
+
+          if (this.currentStep == 3 && elem.tagName != 'image') {
+            const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
+            image.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', './door.png');
+            image.setAttribute('width', elem.width.baseVal.value);
+            image.setAttribute('height', elem.height.baseVal.value);
+            image.setAttribute('x', elem.x.baseVal.value);
+            image.setAttribute('y', elem.y.baseVal.value);
+            image.setAttribute('id', elem.id);
+            image.setAttribute('class', 'clickable');
+            obj[i].parentNode.replaceChild(image, obj[i]);
+          } else if (this.currentStep == 3) {
+            const block = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+            block.setAttribute('style', 'stroke:#000; fill:#FFF');
+            block.setAttribute('width', elem.width.baseVal.value);
+            block.setAttribute('height', elem.height.baseVal.value);
+            block.setAttribute('x', elem.x.baseVal.value);
+            block.setAttribute('y', elem.y.baseVal.value);
+            block.setAttribute('class', 'clickable');
+            block.setAttribute('id', elem.id);
+          }
+        } else {
+          obj[i].setAttribute('category', this.stepsEnum[this.currentStep].step);
+        }
+      },
       goNextStep() {
-        this.currentStep++;
-        if (this.currentStep > 4) {
-          this.sendMap();
+        switch (this.currentStep) {
+          case 0:
+            this.currentStep++;
+            document.querySelectorAll('.clickable')
+              .forEach(val => {
+                val.removeEventListener('click', eventFunction);
+              });
+            document.querySelectorAll('[category="shelf"]')
+              .forEach(shelf => {
+                shelf.addEventListener('click', (event) => {
+                  let targetId = event.target.id;
+                  console.log(targetId);
+                });
+              });
+            break;
+          case 1:
+
+            break;
+          case 5:
+            this.sendMap();
+          // this.currentStep;
         }
       },
       goPrevStep() {
@@ -75,8 +126,8 @@
         const data = {
           latitude: Math.random(),
           longitude: Math.random(),
-          width: document.getElementById("svg").viewBox.baseVal.width / 100,
-          height:  document.getElementById("svg").viewBox.baseVal.height / 100,
+          width: document.getElementById('svg').viewBox.baseVal.width / 100,
+          height: document.getElementById('svg').viewBox.baseVal.height / 100,
           floor: 1,
           blocks: map.filter(it => it.x != null)
         };
@@ -96,45 +147,19 @@
         scale: 1,
       };
       const scalable = createGrid(10, 10);
-      scalable.id = "svg";
+      scalable.id = 'svg';
       const container = document.getElementsByClassName('content')[0];
       container.append(scalable);
       const obj = document.getElementsByClassName('clickable');
       for (let i = 0; i < obj.length; i++) {
         let elem = obj[i];
-        obj[i].addEventListener('click', () => {
-          if (obj[i].getAttribute('category') !== undefined) {
-            obj[i].setAttribute('style', `fill: ${this.stepsEnum[this.currentStep].color}; stroke: #000`);
-            obj[i].setAttribute('category', this.stepsEnum[this.currentStep].step);
-            if (this.currentStep == 2 && elem.tagName != 'image') {
-              const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-              image.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', './door.png');
-              image.setAttribute('width', elem.width.baseVal.value);
-              image.setAttribute('height', elem.height.baseVal.value);
-              image.setAttribute('x', elem.x.baseVal.value);
-              image.setAttribute('y', elem.y.baseVal.value);
-              image.setAttribute('id', elem.id);
-              image.setAttribute('class', 'clickable');
-              obj[i].parentNode.replaceChild(image, obj[i]);
-            } else if (this.currentStep == 3) {
-              const block = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-              block.setAttribute('style', 'stroke:#000; fill:#FFF');
-              block.setAttribute('width', elem.width.baseVal.value);
-              block.setAttribute('height', elem.height.baseVal.value);
-              block.setAttribute('x', elem.x.baseVal.value);
-              block.setAttribute('y', elem.y.baseVal.value);
-              block.setAttribute('class', 'clickable');
-              block.setAttribute('id', elem.id);
-            }
-          } else {
-            obj[i].setAttribute('category', this.stepsEnum[this.currentStep].step);
-          }
-        });
+        elem.addEventListener('click', eventFunction(elem));
       }
+
       interact(container)
         .gesturable({
           onstart: function (event) {
-            angleScale.angle -= event.angle; // ????
+            angleScale.angle -= event.angle;
             scalable.classList.remove('reset');
           },
           onmove: function (event) {
@@ -166,6 +191,7 @@
       }
 
       window.dragMoveListener = dragMoveListener;
+
     }
   };
 </script>
