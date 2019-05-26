@@ -27,7 +27,7 @@
 </template>
 
 <script>
-  import { createGrid, dropMarkup } from '../api/svg';
+  import { createGrid, dropMarkup, setAttrs } from '../api/svg';
   import interact from 'interactjs';
   import axios from 'axios';
   import CategoryItem from '../components/CategoryItem.vue';
@@ -46,6 +46,7 @@
     },
     data: () => ({
       currentCategoryPopupShelf: {},
+      shopId: null,
       currentStage: 0,
       currentBindingBlock: {},
       showCategoryPopup: false,
@@ -89,9 +90,17 @@
       ],
     }),
     methods: {
-      replaceElementToImage(element) {
+      replaceElementToImage(elem) {
         const image = document.createElementNS('http://www.w3.org/2000/svg', 'image');
         image.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', './door.png');
+        setAttrs(image, 'width',
+          elem.width.baseVal.value, 'height',
+          elem.height.baseVal.value, 'x',
+          elem.x.baseVal.value,
+          'y', elem.y.baseVal.value,
+          'id', elem.id,
+          'class', 'clickable');
+        elem.parentNode.replaceChild(image, elem);
       },
       replaceElementToRect(element) {
 
@@ -115,11 +124,8 @@
             }
           });
         const data = {
-          latitude: Math.random(),
-          longitude: Math.random(),
           width: document.getElementById('svg').viewBox.baseVal.width / 100,
           height: document.getElementById('svg').viewBox.baseVal.height / 100,
-          floor: 1,
           blocks: map.filter(it => it.x != null)
         };
         axios.post('http://192.168.42.55:8080/map/add', data)
@@ -144,15 +150,13 @@
           this.currentStage--;
         }
       },
-      init() {
-
-      },
     },
     created() {
       axios.get('http://192.168.43.95:8080/category')
         .then(res => {
           this.categoryList = res.data;
-        })
+        });
+      this.shopId = this.$route.query.id;
     },
     mounted() {
       let angleScale = {
@@ -170,6 +174,14 @@
               console.log(event);
               if (element.getAttribute('category')) {
                 switch (this.currentStage) {
+                  case 0:
+                    if (event.target.style.fill == 'rgb(249, 234, 192)') {
+                      dropMarkup(event.target);
+                    } else {
+                      element.setAttribute('style', `fill: ${this.stages[this.currentStage].color}; stroke: #000`);
+                      element.setAttribute('category', this.stages[this.currentStage].stage);
+                    }
+                    break;
                   case 1:
                     if (event.target.style.fill == 'rgb(249, 234, 192)') {
                       this.currentBindingBlock = element;
@@ -177,9 +189,23 @@
                       this.currentCategoryPopupShelf = event.target;
                     }
                     break;
+                  case 2:
+                    if (event.target.style.fill == 'rgb(235, 244, 252)') {
+                      dropMarkup(event.target);
+                    } else {element.setAttribute('style', `fill: ${this.stages[this.currentStage].color}; stroke: #000`);
+                      element.setAttribute('category', this.stages[this.currentStage].stage);
+                    }
+                    break;
                   case 3:
                     if (element.tagName !== 'image') {
-                      replaceElement(element);
+                      this.replaceElementToImage(element);
+                    }
+                    break;
+                  case 4:
+                    if (event.target.style.fill == 'rgb(25, 25, 25)') {
+                      dropMarkup(event.target);
+                    } else {element.setAttribute('style', `fill: ${this.stages[this.currentStage].color}; stroke: #000`);
+                      element.setAttribute('category', this.stages[this.currentStage].stage);
                     }
                     break;
                   case 5:
@@ -190,15 +216,13 @@
                     break;
                 }
               } else {
-
-
                 switch (this.currentStage) {
                   case 1:
                     this.showCategoryPopup;
                     break;
                   case 3:
                     if (element.tagName !== 'image') {
-                      replaceElement(element);
+                      this.replaceElementToImage(element);
                     }
                     break;
                   case 5:

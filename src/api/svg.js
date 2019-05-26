@@ -39,7 +39,7 @@ export function createGrid(n, m) {
 }
 
 export function dropMarkup(b) {
-  setAttrs(b, 'style', 'stroke:#000; fill:#FFF', 'class', 'clickable', 'id', `unmapped:${b.x}:${b.y}`);
+  setAttrs(b, 'style', 'stroke:#000; fill:#FFF', 'class', 'clickable', 'id', `unmapped:${b.x}:${b.y}`, 'category', undefined);
 }
 
 export function resizeSvg(svg, n, m) {
