@@ -7,17 +7,16 @@ export default function objectToSvg(floor) {
   svg.setAttribute('height', '100%');
   svg.setAttribute('viewBox', `0 0 ${blockSize * floor.width} ${blockSize * floor.height}`);
   floor.blocks.forEach(block => {
-    //const svgBlock =
-    // document.createElementNS(`xlink:href=192.168.43.95:8080/${block.logoUrl}"`, "image");
-    // const svgBlock = document.createElementNS('http://www.w3.org/2000/svg', 'image');
-    svgBlock.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', block.logoUrl);
-    svgBlock.setAttribute('width', blockSize.toString());
-    svgBlock.setAttribute('height', blockSize.toString());
-    svgBlock.setAttribute('x', block.x * blockSize);
-    svgBlock.setAttribute('y', block.y * blockSize);
-    svgBlock.setAttribute('id', `shelf:${block.id}`);
-    svgBlock.setAttribute('class', 'shelf');
-    svg.append(svgBlock);
+    const b = document.createElementNS("http://www.w3.org/2000/svg", `${block.category ? "image" : "rect"}`);
+    if (b.tagName == "image")
+      b.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', `${block.category ? "http://192.168.43.95:8080" + block.category.logoUrl : "http://placekitten.com/32/32"}`);
+    b.setAttribute('width', blockSize.toString());
+    b.setAttribute('height', blockSize.toString());
+    b.setAttribute('x', block.x * blockSize);
+    b.setAttribute('y', (floor.height - block.y) * blockSize);
+    b.setAttribute('id', `${b.tagName == "image" ? "shelf" : "pass"}:${block.id}`);
+    b.setAttribute('class', `${b.tagName == "image" ? "shelf" : "pass"}`);
+    svg.append(b);
   });
   return svg;
 }

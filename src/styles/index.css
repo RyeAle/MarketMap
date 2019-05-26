@@ -16,3 +16,10 @@
 .container {
     padding: 0 !important;
 }
+
+.pass {
+    fill: antiquewhite;
+}
+.shelf {
+    background-color: aquamarine;
+}
