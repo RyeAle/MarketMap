@@ -1,9 +1,7 @@
 // import Vue from 'vue'
 //
-// const events =  Vue.resource('/event{/id}');
+// const events =  Vue.resource('http://192.168.43.95:8080/shop');
 //
 // export default {
-//   save: event => events.save({}, event),
-//   edit: event => events.update({}, event),
-//   remove: id => events.remove({id})
+//   list: () => events.get()
 // }
