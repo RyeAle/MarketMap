@@ -8,11 +8,3 @@
     ></v-text-field>
   </v-toolbar>
 </template>
-
-<script>
-
-</script>
-
-<style scoped>
-
-</style>

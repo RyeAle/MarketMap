@@ -3,7 +3,7 @@ var blockTypeEnum = Object.freeze([
   ]
 );
 
-var jsonProp = [
+const jsonProp = [
   {
     latitude: '222111',
     longitude: '333111',
@@ -27,9 +27,8 @@ var jsonProp = [
   }
 ];
 
-parseResponse(jsonProp);
-
-function parseResponse(json) {
+function parseResponse(jsonString) {
+  let json = JSON.parse(jsonString);
   json.forEach(value => {
     let { latitude, longitude, width, height, floor, blocks } = value;
     console.log(latitude,longitude,width,height,floor);
